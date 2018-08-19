@@ -1,6 +1,7 @@
+import enum
+
 import sqlalchemy
 import sqlalchemy_utils
-import enum
 
 from web_result_server.models.base import Base
 
@@ -19,5 +20,6 @@ class TestItem(Base):
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
     nodeid = sqlalchemy.Column(sqlalchemy.String(255), nullable=False)
-    result = sqlalchemy.Column(sqlalchemy_utils.ChoiceType(PytestResult), nullable=False)
+    result = sqlalchemy.Column(sqlalchemy_utils.ChoiceType(PytestResult, impl=sqlalchemy.Integer()),
+                               nullable=False)
     duration = sqlalchemy.Column(sqlalchemy.Float)
