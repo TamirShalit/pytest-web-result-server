@@ -18,6 +18,6 @@ class TestItem(Base):
     __tablename__ = 'items'
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
-    nodeid = sqlalchemy.Column(sqlalchemy.String, nullable=False)
+    nodeid = sqlalchemy.Column(sqlalchemy.String(255), nullable=False)
     result = sqlalchemy.Column(sqlalchemy_utils.ChoiceType(PytestResult), nullable=False)
     duration = sqlalchemy.Column(sqlalchemy.Float)
