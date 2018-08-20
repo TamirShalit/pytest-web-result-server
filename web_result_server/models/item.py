@@ -6,12 +6,14 @@ import sqlalchemy_utils
 from web_result_server.models.base import Base
 
 
-class PytestResult(enum.Enum):
-    PASSED = 1
-    FAILED = 2
-    SKIPPED = 3
-    XFAILED = 4
-    XPASSED = 5
+class ItemState(enum.Enum):
+    DID_NOT_START = 0
+    RUNNING = 1
+    PASSED = 2
+    FAILED = 3
+    SKIPPED = 4
+    XFAILED = 5
+    XPASSED = 6
 
 
 class TestItem(Base):
@@ -20,6 +22,6 @@ class TestItem(Base):
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
     nodeid = sqlalchemy.Column(sqlalchemy.String(255), nullable=False)
-    result = sqlalchemy.Column(sqlalchemy_utils.ChoiceType(PytestResult, impl=sqlalchemy.Integer()),
-                               nullable=False)
+    state = sqlalchemy.Column(sqlalchemy_utils.ChoiceType(ItemState, impl=sqlalchemy.Integer()),
+                              nullable=False)
     duration = sqlalchemy.Column(sqlalchemy.Float)
