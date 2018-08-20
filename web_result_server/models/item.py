@@ -1,9 +1,8 @@
 import enum
 
-import sqlalchemy
 import sqlalchemy_utils
 
-from web_result_server.models.base import Base
+from web_result_server.app import db
 
 
 class ItemState(enum.Enum):
@@ -16,12 +15,10 @@ class ItemState(enum.Enum):
     XPASSED = 6
 
 
-class TestItem(Base):
-    """Represents a single test item."""
-    __tablename__ = 'items'
-
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
-    nodeid = sqlalchemy.Column(sqlalchemy.String(255), nullable=False)
-    state = sqlalchemy.Column(sqlalchemy_utils.ChoiceType(ItemState, impl=sqlalchemy.Integer()),
-                              nullable=False)
-    duration = sqlalchemy.Column(sqlalchemy.Float)
+class TestItem(db.Model):
+    """Represents a single PyTest test item."""
+    id = db.Column(db.Integer, primary_key=True)
+    nodeid = db.Column(db.String(255), nullable=False)
+    state = db.Column(sqlalchemy_utils.ChoiceType(ItemState, impl=db.Integer()),
+                      nullable=False)
+    duration = db.Column(db.Float)
