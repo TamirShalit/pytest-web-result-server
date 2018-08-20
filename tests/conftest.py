@@ -21,12 +21,13 @@ def app():
 
 @pytest.fixture(scope='session')
 def db(app):
-    if os.path.exists(TEST_DB_PATH):
-        os.remove(TEST_DB_PATH)
-
+    _remove_test_db_file()
     _db.init_app(app)
     _db.create_all()
     yield _db
+    _remove_test_db_file()
 
+
+def _remove_test_db_file():
     if os.path.exists(TEST_DB_PATH):
         os.remove(TEST_DB_PATH)
