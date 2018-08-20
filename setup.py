@@ -5,7 +5,8 @@ setup(
     version='0.1',
     packages=find_packages(exclude=('web_result_server.tests',)),
     url='https://github.com/TamirShalit/pytest-web-result-server',
-    requires=['flask-sqlalchemy', 'sqlalchemy-utils', 'enum34'],
+    install_requires=['flask-sqlalchemy', 'sqlalchemy-utils', 'enum34'],
+    tests_requires=['pytest'],
     author='tamir',
     author_email='shalit.tamir@gmail.com',
     description='Web server for viewing pytest results'
