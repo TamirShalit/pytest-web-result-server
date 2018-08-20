@@ -32,13 +32,13 @@ def db(app):
 @pytest.fixture
 def session(db):
     """DB session which renews every test and rolles back changes after test has finished."""
-    connection = db.engine.connect()
-    transaction = connection.begin()
-    db.session = db.create_scoped_session(options=(dict(bind=connection, binds={})))
-    yield db.session
-    transaction.rollback()
-    connection.close()
-    db.session.remove()
+    with db.engine.connect() as connection:
+        transaction = connection.begin()
+        db.session = db.create_scoped_session(options=(dict(bind=connection, binds={})))
+        yield db.session
+        transaction.rollback()
+        connection.close()
+        db.session.remove()
 
 
 def _remove_test_db_file():
