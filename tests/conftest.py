@@ -37,7 +37,6 @@ def session(db):
         db.session = db.create_scoped_session(options=(dict(bind=connection, binds={})))
         yield db.session
         transaction.rollback()
-        connection.close()
         db.session.remove()
 
 
