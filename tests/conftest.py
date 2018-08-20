@@ -29,6 +29,17 @@ def db(app):
     _remove_test_db_file()
 
 
+@pytest.fixture
+def session(db):
+    connection = db.engine.connect()
+    transaction = connection.begin()
+    db.session = db.create_scoped_session(options=(dict(bind=connection, binds={})))
+    yield db.session
+    transaction.rollback()
+    connection.close()
+    db.session.remove()
+
+
 def _remove_test_db_file():
     if os.path.exists(TEST_DB_PATH):
         os.remove(TEST_DB_PATH)
