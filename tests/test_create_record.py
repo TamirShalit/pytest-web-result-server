@@ -2,7 +2,7 @@ from datetime import datetime
 
 import pytest
 
-from web_result_server.models import item, session
+from web_result_server.models import item, pytest_session
 
 
 @pytest.mark.parametrize('record_class, init_arguments', [
@@ -11,7 +11,7 @@ from web_result_server.models import item, session
     (item.TestItem, dict(nodeid='tests/sanity/test_bar.py::test_bar',
                          state=item.ItemState.PASSED,
                          duration=0.132)),
-    (session.Session, dict(duration=21.01, start_time=datetime.now()))
+    (pytest_session.PytestSession, dict(duration=21.01, start_time=datetime.now()))
 ])
 def test_create_record(session, record_class, init_arguments):
     """
