@@ -22,6 +22,6 @@ def test_create_record(session, record_class, init_arguments):
     record = record_class(**init_arguments)
     session.add(record)
     session.commit()
-    row_from_db = record_class.query.first()
+    row_from_db = record_class.query.filter_by(**init_arguments).first()
     for column_name, element_value in init_arguments.items():
         assert getattr(row_from_db, column_name) == element_value
