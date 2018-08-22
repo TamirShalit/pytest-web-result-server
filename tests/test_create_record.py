@@ -5,6 +5,16 @@ import pytest
 from web_result_server.models import item, pytest_session
 
 
+INITIAL_PYTEST_SESSION = pytest_session.PytestSession(duration=2.6, start_time=datetime.now())
+
+
+@pytest.fixture(autouse=True)
+def add_pytest_session(session):
+    """Add constant pytest session so that `TestItem` can link to."""
+    session.add(INITIAL_PYTEST_SESSION)
+    session.commit()
+
+
 @pytest.mark.parametrize('record_class, init_arguments', [
     (item.TestItem, dict(nodeid='tests/test_foo.py::test_foo',
                          state=item.ItemState.DID_NOT_START)),
