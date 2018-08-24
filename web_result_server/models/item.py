@@ -22,3 +22,4 @@ class TestItem(db.Model):
     state = db.Column(sqlalchemy_utils.ChoiceType(ItemState, impl=db.Integer()),
                       nullable=False)
     duration = db.Column(db.Float)
+    session_id = db.Column(db.Integer, db.ForeignKey('pytest_session.id'), nullable=False)
