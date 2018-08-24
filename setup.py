@@ -5,7 +5,7 @@ setup(
     version='0.1',
     packages=find_packages(exclude=['tests']),
     url='https://github.com/TamirShalit/pytest-web-result-server',
-    install_requires=['flask-sqlalchemy', 'sqlalchemy-utils', 'enum34'],
+    install_requires=['flask-sqlalchemy', 'sqlalchemy-utils'],
     tests_requires=['pytest'],
     author='tamir',
     author_email='shalit.tamir@gmail.com',
