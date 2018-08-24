@@ -4,7 +4,7 @@ import pytest
 
 from web_result_server.models import item, pytest_session
 
-INITIAL_PYTEST_SESSION = pytest_session.PytestSession(duration=2.6, start_time=datetime.now())
+_INITIAL_SESSION_INIT_ARGUMENTS = dict(duration=2.6, start_time=datetime.now())
 
 
 @pytest.mark.parametrize('init_arguments', [
@@ -12,8 +12,9 @@ INITIAL_PYTEST_SESSION = pytest_session.PytestSession(duration=2.6, start_time=d
     dict(nodeid='tests/sanity/test_bar.py::test_bar', state=item.ItemState.PASSED, duration=0.132)
 ])
 def test_create_pytest_item(session, init_arguments):
-    session.add(INITIAL_PYTEST_SESSION)
-    record = item.TestItem(session=INITIAL_PYTEST_SESSION, **init_arguments)
+    initial_session = pytest_session.PytestSession(**_INITIAL_SESSION_INIT_ARGUMENTS)
+    session.add(initial_session)
+    record = item.TestItem(session=initial_session, **init_arguments)
     session.add(record)
     session.commit()
     row_from_db = item.TestItem.query.filter_by(**init_arguments).first()
