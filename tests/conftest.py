@@ -29,7 +29,7 @@ def db(app):
 
 
 @pytest.fixture
-def session(db):
+def db_session(db):
     """DB session which renews every test and rolles back changes after test has finished."""
     with db.engine.connect() as connection:
         transaction = connection.begin()
