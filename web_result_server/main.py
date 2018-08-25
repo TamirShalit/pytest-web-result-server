@@ -11,10 +11,14 @@ def main():
     with app.app_context():
         db.init_app(app)
         db.create_all()
-        rest_api_manager = flask_restless.APIManager(app, flask_sqlalchemy_db=db)
-        rest_api_manager.create_api(TestItem, methods=['GET', 'POST', 'DELETE', 'PUT'])
-        rest_api_manager.create_api(PytestSession, methods=['GET', 'POST', 'PUT'])
+        _create_rest_api(app)
     app.run()
+
+
+def _create_rest_api(flask_app):
+    rest_api_manager = flask_restless.APIManager(flask_app, flask_sqlalchemy_db=db)
+    rest_api_manager.create_api(TestItem, methods=['GET', 'POST', 'DELETE', 'PUT'])
+    rest_api_manager.create_api(PytestSession, methods=['GET', 'POST', 'PUT'])
 
 
 if __name__ == '__main__':
