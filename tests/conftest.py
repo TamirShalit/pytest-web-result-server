@@ -8,7 +8,7 @@ from web_result_server.database import db as _db
 TEST_DB_PATH = os.path.join(os.path.dirname(__file__), 'tests.db')
 TEST_DB_URI = 'sqlite:///{db_path}'.format(db_path=TEST_DB_PATH)
 
-TEST_APP_CONFIGURATION = {'TESTING': True, 'SQLALCHEMY_DATABASE_URI': TEST_DB_URI}
+TEST_APP_CONFIGURATION = {'TESTING': True, app_factory.DB_URI_CONFIG_KEY: TEST_DB_URI}
 
 
 @pytest.fixture(scope='session')
