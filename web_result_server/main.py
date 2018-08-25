@@ -9,10 +9,14 @@ from web_result_server.models.pytest_session import PytestSession
 def main():
     app = app_factory.create_app(__name__)
     with app.app_context():
-        db.init_app(app)
-        db.create_all()
+        _create_db(app)
         _create_rest_api(app)
     app.run()
+
+
+def _create_db(app):
+    db.init_app(app)
+    db.create_all()
 
 
 def _create_rest_api(flask_app):
