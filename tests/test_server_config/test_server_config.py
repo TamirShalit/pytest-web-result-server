@@ -14,7 +14,7 @@ _EMPTY_CONFIG_LOCATION = os.path.join(_CURRENT_DIRECTORY, 'empty_config.json')
 @pytest.fixture
 def use_config():
     def _use_config(location):
-        os.environ[app_factory.CONFIG_LOCATION_ENVIRONMENT_VARIABLE] = _TEST_CONFIG_LOCATION
+        os.environ[app_factory.CONFIG_LOCATION_ENVIRONMENT_VARIABLE] = location
 
     yield _use_config
     del os.environ[app_factory.CONFIG_LOCATION_ENVIRONMENT_VARIABLE]
