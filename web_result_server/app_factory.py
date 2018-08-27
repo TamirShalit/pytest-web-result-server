@@ -13,4 +13,8 @@ def create_app(name):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     config_location = os.getenv(CONFIG_LOCATION_ENVIRONMENT_VARIABLE, DEFAULT_CONFIG_LOCATION)
     app.config.from_json(config_location)
+    if DB_URI_CONFIG_KEY not in app.config:
+        raise ValueError(
+            'DB not specified. Please specify SQLAlchemy URI in config key "{0}"'.format(
+                DB_URI_CONFIG_KEY))
     return app
