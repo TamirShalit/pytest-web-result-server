@@ -2,7 +2,7 @@ from datetime import datetime
 
 import pytest
 
-from web_result_server.models import item, pytest_session
+from webresultserver.models import item, pytest_session
 
 _INITIAL_SESSION_INIT_ARGUMENTS = dict(duration=2.6, start_time=datetime.now())
 

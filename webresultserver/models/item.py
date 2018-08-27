@@ -2,7 +2,7 @@ import enum
 
 import sqlalchemy_utils
 
-from web_result_server.database import db
+from webresultserver.database import db
 
 
 class ItemState(enum.Enum):

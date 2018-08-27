@@ -2,8 +2,8 @@ import os
 
 import pytest
 
-from web_result_server import app_factory
-from web_result_server.database import db as _db
+from webresultserver import app_factory
+from webresultserver.database import db as _db
 
 TEST_DB_PATH = os.path.join(os.path.dirname(__file__), 'tests.db')
 TEST_DB_URI = 'sqlite:///{db_path}'.format(db_path=TEST_DB_PATH)

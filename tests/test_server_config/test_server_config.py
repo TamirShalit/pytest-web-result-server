@@ -2,8 +2,8 @@ import os
 
 import pytest
 
-from web_result_server import app_factory
-from web_result_server.app_factory import DB_URI_CONFIG_KEY
+from webresultserver import app_factory
+from webresultserver.app_factory import DB_URI_CONFIG_KEY
 
 _CURRENT_DIRECTORY = os.path.dirname(__file__)
 

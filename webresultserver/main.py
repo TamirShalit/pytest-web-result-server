@@ -1,9 +1,9 @@
 import flask_restless
 
-from web_result_server import app_factory
-from web_result_server.database import db
-from web_result_server.models.item import TestItem
-from web_result_server.models.pytest_session import PytestSession
+from webresultserver import app_factory
+from webresultserver.database import db
+from webresultserver.models.item import TestItem
+from webresultserver.models.pytest_session import PytestSession
 
 
 def main():
