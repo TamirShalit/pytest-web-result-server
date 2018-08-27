@@ -12,7 +12,7 @@ _TEST_CONFIG_LOCATION = os.path.join(os.path.dirname(__file__), 'test_config.jso
 def use_test_config():
     os.environ[app_factory.CONFIG_LOCATION_ENVIRONMENT_VARIABLE] = _TEST_CONFIG_LOCATION
     yield
-    os.unsetenv(app_factory.CONFIG_LOCATION_ENVIRONMENT_VARIABLE)
+    del os.environ[app_factory.CONFIG_LOCATION_ENVIRONMENT_VARIABLE]
 
 
 @pytest.mark.usefixtures('use_test_config')
