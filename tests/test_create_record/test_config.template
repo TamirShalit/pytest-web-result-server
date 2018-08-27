@@ -1,0 +1,4 @@
+{{
+  "SQLALCHEMY_DATABASE_URI": "sqlite:///{db_location}",
+  "TESTING": true
+}}
