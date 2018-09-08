@@ -10,13 +10,18 @@ TEST_DB_PATH = os.path.join(os.path.dirname(__file__), 'test.db')
 CONFIG_TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), 'test_config.template')
 
 
-@pytest.fixture(scope='session')
-def app(tmpdir_factory):
+def _create_config(tmpdir_factory):
     with open(CONFIG_TEMPLATE_PATH) as config_template:
         config_text = config_template.read().format(db_location=TEST_DB_PATH)
-    config_path = tmpdir_factory.getbasetemp().join('test_config.json')
-    config_path.write(config_text)
-    with utils.use_config(config_path.strpath):
+    config_path_object = tmpdir_factory.getbasetemp().join('test_config.json')
+    config_path_object.write(config_text)
+    return config_path_object
+
+
+@pytest.fixture(scope='session')
+def app(tmpdir_factory):
+    config_path_object = _create_config(tmpdir_factory)
+    with utils.use_config(config_path_object.strpath):
         flask_app = app_factory.create_app(__name__)
         with flask_app.app_context():
             yield flask_app
