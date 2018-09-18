@@ -1,6 +1,11 @@
 import os
 
+import flask_restless
 from flask import Flask
+
+from webresultserver.database import db
+from webresultserver.models.item import TestItem
+from webresultserver.models.pytest_session import PytestSession
 
 DEFAULT_CONFIG_LOCATION = os.path.expanduser('~/web_results_server.json')
 CONFIG_LOCATION_ENVIRONMENT_VARIABLE = 'WEB_RESULTS_SERVER_CONFIG'
@@ -18,3 +23,14 @@ def create_app(name):
             'DB not specified. Please specify SQLAlchemy URI in config key "{0}"'.format(
                 DB_URI_CONFIG_KEY))
     return app
+
+
+def create_db(flask_app):
+    db.init_app(flask_app)
+    db.create_all()
+
+
+def create_rest_api(flask_app):
+    rest_api_manager = flask_restless.APIManager(flask_app, flask_sqlalchemy_db=db)
+    rest_api_manager.create_api(TestItem, methods=['GET', 'POST', 'DELETE', 'PUT'])
+    rest_api_manager.create_api(PytestSession, methods=['GET', 'POST', 'PUT'])
