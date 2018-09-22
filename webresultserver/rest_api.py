@@ -26,7 +26,7 @@ class TestItemResource(flask_restful.Resource):
                                  state=ItemState.DID_NOT_START)
         db.session.add(new_test_item)
         db.session.commit()
-        return new_test_item
+        return new_test_item.id
 
 
 api.add_resource(PytestSessionResource, '/session')
