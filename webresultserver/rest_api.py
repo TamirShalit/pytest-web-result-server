@@ -20,12 +20,14 @@ class PytestSessionResource(flask_restful.Resource):
 
 
 class TestItemResource(flask_restful.Resource):
-    def post(self, nodeid):
-        new_test_item = TestItem(nodeid=nodeid, state=ItemState.DID_NOT_START)
+    def post(self, session_id, nodeid):
+        new_test_item = TestItem(session_id=session_id,
+                                 nodeid=nodeid,
+                                 state=ItemState.DID_NOT_START)
         db.session.add(new_test_item)
         db.session.commit()
         return new_test_item
 
 
 api.add_resource(PytestSessionResource, '/session')
-api.add_resource(TestItemResource, '/testitem/<string:nodeid>')
+api.add_resource(TestItemResource, '/test_item/<string:session_id>/<string:nodeid>')
