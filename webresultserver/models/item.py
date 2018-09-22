@@ -23,3 +23,5 @@ class TestItem(db.Model):
                       nullable=False)
     duration = db.Column(db.Float)
     session_id = db.Column(db.Integer, db.ForeignKey('pytest_session.id'), nullable=False)
+
+    __table_args__ = (db.UniqueConstraint('nodeid', 'session_id'),)
