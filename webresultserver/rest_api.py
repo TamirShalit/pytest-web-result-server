@@ -30,4 +30,4 @@ class TestItemResource(flask_restful.Resource):
 
 
 api.add_resource(PytestSessionResource, '/session')
-api.add_resource(TestItemResource, '/test_item/<string:session_id>/<string:nodeid>')
+api.add_resource(TestItemResource, '/test_item/<int:session_id>/<string:nodeid>')

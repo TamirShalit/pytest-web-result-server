@@ -5,7 +5,7 @@ import sqlalchemy_utils
 from webresultserver.database import db
 
 
-class ItemState(enum.Enum):
+class ItemState(enum.IntEnum):
     DID_NOT_START = 0
     RUNNING = 1
     PASSED = 2
