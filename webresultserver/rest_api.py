@@ -42,7 +42,7 @@ class ChangeTestItemStatus(flask_restful.Resource):
     def put(self, item_id, state_name):
         state_name = state_name.upper()
         self._ensure_valid_state_name(state_name)
-        test_item = db.session.query(TestItem).first()[0]
+        test_item = db.session.query(TestItem).first()
         self._ensure_test_item_exists(item_id, test_item)
         test_item.state = getattr(ItemState, state_name)
         db.session.commit()
