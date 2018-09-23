@@ -32,7 +32,7 @@ class TestItemResource(flask_restful.Resource):
 
     def _ensure_item_not_exist(self, nodeid, session_id):
         if db.session.query(db.exists().where(db.and_(TestItem.session_id == session_id,
-                                                      TestItem.nodeid == nodeid))):
+                                                      TestItem.nodeid == nodeid))).scalar():
             error_message = 'nodeid "{nodeid}" already exists in session {session_id}'.format(
                 nodeid=nodeid, session_id=session_id)
             flask_restful.abort(http.HTTPStatus.BAD_REQUEST, error_message=error_message)
