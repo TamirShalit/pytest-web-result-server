@@ -61,4 +61,4 @@ class ChangeTestItemStatus(flask_restful.Resource):
 
 api.add_resource(AddPytestSession, '/add_session')
 api.add_resource(AddTestItem, '/add_test_item/<int:session_id>/<string:nodeid>')
-api.add_resource(ChangeTestItemStatus, '/change_test_status/<int:item_id>/<string:state_name>')
+api.add_resource(ChangeTestItemStatus, '/change_test_state/<int:item_id>/<string:state_name>')
