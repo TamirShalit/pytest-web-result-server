@@ -12,7 +12,7 @@ api_blueprint = flask.Blueprint('api', __name__)
 api = flask_restful.Api(api_blueprint)
 
 
-class PytestSessionResource(flask_restful.Resource):
+class AddPytestSession(flask_restful.Resource):
     def post(self):
         new_pytest_session = PytestSession(start_time=datetime.now())
         db.session.add(new_pytest_session)
@@ -20,7 +20,7 @@ class PytestSessionResource(flask_restful.Resource):
         return new_pytest_session.id
 
 
-class TestItemResource(flask_restful.Resource):
+class AddTestItem(flask_restful.Resource):
     def post(self, session_id, nodeid):
         self._ensure_item_not_exist(nodeid, session_id)
         new_test_item = TestItem(session_id=session_id,
@@ -38,5 +38,5 @@ class TestItemResource(flask_restful.Resource):
             flask_restful.abort(http.HTTPStatus.BAD_REQUEST, error_message=error_message)
 
 
-api.add_resource(PytestSessionResource, '/session')
-api.add_resource(TestItemResource, '/test_item/<int:session_id>/<string:nodeid>')
+api.add_resource(AddPytestSession, '/add_session')
+api.add_resource(AddTestItem, '/add_test_item/<int:session_id>/<string:nodeid>')
