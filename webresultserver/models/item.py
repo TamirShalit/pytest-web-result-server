@@ -7,12 +7,14 @@ from webresultserver.database import db
 
 class ItemState(enum.IntEnum):
     DID_NOT_START = 0
-    RUNNING = 1
-    PASSED = 2
-    FAILED = 3
-    SKIPPED = 4
-    XFAILED = 5
-    XPASSED = 6
+    RUNNING_SETUP = 1
+    RUNNING_TEST = 2
+    RUNNING_TEARDOWN = 3
+    PASSED = 4
+    FAILED = 5
+    SKIPPED = 6
+    XFAILED = 7
+    XPASSED = 8
 
 
 class TestItem(db.Model):
