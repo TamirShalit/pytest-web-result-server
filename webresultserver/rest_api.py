@@ -3,6 +3,7 @@ from datetime import datetime
 
 import flask
 import flask_restful
+from flask_restful import Resource
 
 from webresultserver.database import db
 from webresultserver.models.item import TestItem, ItemState
@@ -41,7 +42,17 @@ class AddTestItem(flask_restful.Resource):
             flask_restful.abort(http.HTTPStatus.BAD_REQUEST, error_message=error_message)
 
 
-class ChangeTestItemState(flask_restful.Resource):
+class ModifyTestItemReource(Resource):
+    @staticmethod
+    def _get_existing_test_item(item_id):
+        test_item = db.session.query(TestItem).filter_by(id=item_id).first()
+        if test_item is None:
+            error_message = 'Item with ID {id} does not exist.'.format(id=item_id)
+            flask_restful.abort(http.HTTPStatus.BAD_REQUEST, error_message=error_message)
+        return test_item
+
+
+class ChangeTestItemState(ModifyTestItemReource):
     @classmethod
     def put(cls, item_id, state_name):
         state_name = state_name.upper()
@@ -56,14 +67,6 @@ class ChangeTestItemState(flask_restful.Resource):
         if not hasattr(ItemState, state_name):
             error_message = 'No item state named "{state_name}"'.format(state_name=state_name)
             flask_restful.abort(http.HTTPStatus.BAD_REQUEST, error_message=error_message)
-
-    @staticmethod
-    def _get_existing_test_item(item_id):
-        test_item = db.session.query(TestItem).filter_by(id=item_id).first()
-        if test_item is None:
-            error_message = 'Item with ID {id} does not exist.'.format(id=item_id)
-            flask_restful.abort(http.HTTPStatus.BAD_REQUEST, error_message=error_message)
-        return test_item
 
 
 api.add_resource(AddPytestSession, '/add_session')
