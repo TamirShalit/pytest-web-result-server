@@ -38,7 +38,7 @@ class AddTestItem(flask_restful.Resource):
             flask_restful.abort(http.HTTPStatus.BAD_REQUEST, error_message=error_message)
 
 
-class ChangeTestItemStatus(flask_restful.Resource):
+class ChangeTestItemState(flask_restful.Resource):
     def put(self, item_id, state_name):
         state_name = state_name.upper()
         self._ensure_valid_state_name(state_name)
@@ -61,4 +61,4 @@ class ChangeTestItemStatus(flask_restful.Resource):
 
 api.add_resource(AddPytestSession, '/add_session')
 api.add_resource(AddTestItem, '/add_test_item/<int:session_id>/<string:nodeid>')
-api.add_resource(ChangeTestItemStatus, '/change_test_state/<int:item_id>/<string:state_name>')
+api.add_resource(ChangeTestItemState, '/change_test_state/<int:item_id>/<string:state_name>')
