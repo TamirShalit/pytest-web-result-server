@@ -42,8 +42,7 @@ class ChangeTestItemState(flask_restful.Resource):
     def put(self, item_id, state_name):
         state_name = state_name.upper()
         self._ensure_valid_state_name(state_name)
-        test_item = db.session.query(TestItem).filter_by(id=item_id).first()
-        self._ensure_test_item_exists(item_id, test_item)
+        test_item = self._get_existing_test_item(item_id)
         test_item.state = getattr(ItemState, state_name)
         db.session.commit()
         return {'id': item_id, 'state': state_name}
@@ -53,10 +52,12 @@ class ChangeTestItemState(flask_restful.Resource):
             error_message = 'No item state named "{state_name}"'.format(state_name=state_name)
             flask_restful.abort(http.HTTPStatus.BAD_REQUEST, error_message=error_message)
 
-    def _ensure_test_item_exists(self, item_id, test_item):
+    def _get_existing_test_item(self, item_id):
+        test_item = db.session.query(TestItem).filter_by(id=item_id).first()
         if test_item is None:
             error_message = 'Item with ID {id} does not exist.'.format(id=item_id)
             flask_restful.abort(http.HTTPStatus.BAD_REQUEST, error_message=error_message)
+        return test_item
 
 
 api.add_resource(AddPytestSession, '/add_session')
