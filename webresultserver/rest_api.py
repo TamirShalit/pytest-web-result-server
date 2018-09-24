@@ -45,6 +45,9 @@ class AddTestItem(flask_restful.Resource):
 class ModifyTestItemReource(Resource):
     @staticmethod
     def _get_existing_test_item(item_id):
+        """
+        :rtype: TestItem
+        """
         test_item = db.session.query(TestItem).filter_by(id=item_id).first()
         if test_item is None:
             error_message = 'Item with ID {id} does not exist.'.format(id=item_id)
@@ -69,6 +72,14 @@ class ChangeTestItemState(ModifyTestItemReource):
             flask_restful.abort(http.HTTPStatus.BAD_REQUEST, error_message=error_message)
 
 
+class GetTestItemState(ModifyTestItemReource):
+    @classmethod
+    def get(cls, item_id):
+        test_item = cls._get_existing_test_item(item_id)
+        return test_item.state.name
+
+
 api.add_resource(AddPytestSession, '/add_session')
 api.add_resource(AddTestItem, '/add_test_item/<int:session_id>/<string:nodeid>')
 api.add_resource(ChangeTestItemState, '/change_test_state/<int:item_id>/<string:state_name>')
+api.add_resource(GetTestItemState, '/get_test_state/<int:item_id>')
